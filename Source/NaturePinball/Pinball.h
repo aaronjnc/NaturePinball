@@ -23,4 +23,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+	void AddForce(FVector Force);
+	
+private:
+	UPROPERTY(EditAnywhere, Category = "Components")
+	UStaticMeshComponent* Ball;	
+
 };
