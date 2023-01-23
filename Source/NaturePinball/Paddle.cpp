@@ -15,17 +15,29 @@ APaddle::APaddle()
 void APaddle::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	UActorComponent* comp = GetComponentByClass(UStaticMeshComponent::StaticClass());
+	mesh = Cast<UStaticMeshComponent>(comp);
 }
 
 // Called every frame
 void APaddle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (!CurrentVelocity.IsZero())
+
+	//if (!CurrentVelocity.IsZero())
+	//{
+	//	FVector NewLocation = mesh->GetComponentLocation() + (CurrentVelocity * DeltaTime);
+	//	mesh->SetWorldLocation(NewLocation);
+	//}
+
+	if (paddleSpeed != 0)
 	{
-		FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
-		SetActorLocation(NewLocation);
+		FRotator NewRotation = FRotator(0, 0, paddleSpeed * DeltaTime);
+
+		FQuat QuatRotation = FQuat(NewRotation);
+
+		mesh->AddWorldRotation(QuatRotation, false, 0, ETeleportType::None);
 	}
 }
 
@@ -39,5 +51,7 @@ void APaddle::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void APaddle::Flick()
 {
-	CurrentVelocity.Y = 10;
+	CurrentVelocity.Z = 400;
+	paddleSpeed = 600;
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("This is an on screen message!"));
 }

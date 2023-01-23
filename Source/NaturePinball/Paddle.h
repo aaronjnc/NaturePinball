@@ -15,6 +15,8 @@ public:
 	// Sets default values for this pawn's properties
 	APaddle();
 
+	UStaticMeshComponent *mesh;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -29,5 +31,7 @@ public:
 	void Flick();
 
 	FVector CurrentVelocity;
+
+	float paddleSpeed = 0;
 
 };
