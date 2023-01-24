@@ -15,16 +15,23 @@ ABirdNest::ABirdNest()
 
 	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
 	BoxCollider->SetupAttachment(Nest);
-	BoxCollider->OnComponentHit.AddDynamic(this, &ABirdNest::EmptyNest);
+
+	BirdCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Bird Collider"));
+	BirdCollider->SetupAttachment(Nest);
 
 	BallSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn Point"));
 	BallSpawnPoint->SetupAttachment(Nest);
+
+	BirdPosition = CreateDefaultSubobject<USceneComponent>(TEXT("Bird Position"));
+	BirdPosition->SetupAttachment(Nest);
 }
 
 // Called when the game starts or when spawned
 void ABirdNest::BeginPlay()
 {
 	Super::BeginPlay();
+	BoxCollider->OnComponentHit.AddDynamic(this, &ABirdNest::EmptyNest);
+	BirdCollider->OnComponentBeginOverlap.AddDynamic(this, &ABirdNest::BeginOverlap);
 }
 
 // Called every frame
@@ -48,5 +55,30 @@ void ABirdNest::EmptyNest(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 		APinball* SpawnedBall = GetWorld()->SpawnActor<APinball>(PinballSubclass, SpawnPoint, FRotator::ZeroRotator);
 	}
 	LockedBalls = 0;
+}
+
+void ABirdNest::SetBird(ABirdPickup* BirdPickup)
+{
+	Bird = BirdPickup;
+}
+
+void ABirdNest::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->IsA<ABirdPickup>())
+	{
+		APinball* Pinball = Bird->TakeBall();
+		if (LockedBalls == 0)
+		{
+			Pinball->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+			Pinball->SetActorLocation(GetActorLocation());
+		}
+		LockedBalls++;
+	}
+}
+
+FVector ABirdNest::GetBirdPosition()
+{
+	return BirdPosition->GetComponentLocation();
 }
 

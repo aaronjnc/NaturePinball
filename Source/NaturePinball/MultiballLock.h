@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "MultiballLock.generated.h"
 
+class ABirdPickup;
+class APinball;
 UCLASS()
 class NATUREPINBALL_API AMultiballLock : public AActor
 {
@@ -24,12 +26,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	/*void BeginOverlap(UPrimitiveComponent* OverlappedComponent, 
+	UFUNCTION()
+	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, 
 					  AActor* OtherActor, 
 					  UPrimitiveComponent* OtherComp, 
 					  int32 OtherBodyIndex, 
 					  bool bFromSweep, 
-					  const FHitResult &SweepResult);*/
+					  const FHitResult &SweepResult);
+	
+	void SetBird(ABirdPickup* BirdPickup);
+
+	FVector GetBirdPosition();
 
 private:
 
@@ -39,4 +46,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 	UBoxComponent* LockBox;
 
+	UPROPERTY(EditAnywhere, Category = "Components")
+	USceneComponent* BirdPosition;
+
+	UPROPERTY()
+	ABirdPickup* Bird;
+
+	UPROPERTY()
+	APinball* Ball;
 };

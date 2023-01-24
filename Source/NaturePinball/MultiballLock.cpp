@@ -2,6 +2,8 @@
 
 
 #include "MultiballLock.h"
+#include "Pinball.h"
+#include "BirdPickup.h"
 
 // Sets default values
 AMultiballLock::AMultiballLock()
@@ -14,15 +16,17 @@ AMultiballLock::AMultiballLock()
 
 	LockBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Lock Overlap"));
 	LockBox->SetupAttachment(RootComponent);
-	
-	//LockBox->OnComponentBeginOverlap.AddDynamic(this, &AMultiballLock::BeginOverlap);
+
+	BirdPosition = CreateDefaultSubobject<USceneComponent>(TEXT("Bird Position"));
+	BirdPosition->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
 void AMultiballLock::BeginPlay()
 {
 	Super::BeginPlay();
-	
+		
+	LockBox->OnComponentBeginOverlap.AddDynamic(this, &AMultiballLock::BeginOverlap);
 }
 
 // Called every frame
@@ -30,5 +34,32 @@ void AMultiballLock::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMultiballLock::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->IsA<APinball>())
+	{
+		Ball = Cast<APinball>(OtherActor);
+		Ball->LockBall();
+		Ball->SetActorLocation(LockBox->GetComponentLocation());
+		Ball->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+		Bird->SummonBird(GetActorLocation());
+	}
+	else if (OtherActor->IsA<ABirdPickup>())
+	{
+		Bird->GiveBall(Ball);
+	}
+}
+
+void AMultiballLock::SetBird(ABirdPickup* BirdPickup)
+{
+	Bird = BirdPickup;
+}
+
+FVector AMultiballLock::GetBirdPosition()
+{
+	return BirdPosition->GetComponentLocation();
 }
 

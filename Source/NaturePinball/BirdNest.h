@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BirdPickup.h"
 #include "Pinball.h"
 #include "GameFramework/Actor.h"
 #include "BirdNest.generated.h"
@@ -30,6 +31,18 @@ public:
 
 	void EmptyNest(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Result);
 
+	void SetBird(ABirdPickup* BirdPickup);
+
+	UFUNCTION()
+	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, 
+					  AActor* OtherActor, 
+					  UPrimitiveComponent* OtherComp, 
+					  int32 OtherBodyIndex, 
+					  bool bFromSweep, 
+					  const FHitResult &SweepResult);
+
+	FVector GetBirdPosition();
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 	UStaticMeshComponent* Nest;
@@ -38,7 +51,13 @@ private:
 	UBoxComponent* BoxCollider;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
+	UBoxComponent* BirdCollider;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
 	USceneComponent* BallSpawnPoint;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+	USceneComponent* BirdPosition;
 
 	UPROPERTY()
 	int LockedBalls = 0;
@@ -46,4 +65,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Pinball")
 	TSubclassOf<APinball> PinballSubclass;
 
+	UPROPERTY()
+	ABirdPickup* Bird;
+
+	UPROPERTY()
+	APinball* Ball;
 };
