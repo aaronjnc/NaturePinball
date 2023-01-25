@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Components/BoxComponent.h"
 #include "PaddleManager.generated.h"
 
 UCLASS()
@@ -32,10 +33,25 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
+		USceneComponent* SceneRoot;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+		USceneComponent* LPaddlePivot;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
 		UStaticMeshComponent* LeftPaddle;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
+		UBoxComponent* LPaddleBox;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+		USceneComponent* RPaddlePivot;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
 		UStaticMeshComponent* RightPaddle;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+		UBoxComponent* RPaddleBox;
 
 	UPROPERTY()
 		float LeftPaddleSpeed = 0;
