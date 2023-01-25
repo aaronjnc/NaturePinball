@@ -36,7 +36,7 @@ public:
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Components")
-	UStaticMeshComponent* BirdMesh;
+	USkeletalMeshComponent* BirdMesh;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	USceneComponent* BallLocation;
