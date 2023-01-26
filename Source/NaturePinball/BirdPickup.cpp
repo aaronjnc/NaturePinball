@@ -13,7 +13,7 @@ ABirdPickup::ABirdPickup()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	BirdMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Bird Mesh"));
+	BirdMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Bird Mesh"));
 	RootComponent = BirdMesh;
 
 	BallLocation = CreateDefaultSubobject<USceneComponent>(TEXT("Ball Location"));
