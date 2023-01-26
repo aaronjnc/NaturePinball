@@ -52,15 +52,15 @@ void APaddleManager::Tick(float DeltaTime)
 
 		FQuat QuatRotation = FQuat(NewRotation);
 
-		LPaddlePivot->AddWorldRotation(QuatRotation, false, 0, ETeleportType::None);
+		LPaddlePivot->AddLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 
-		if (LPaddlePivot->GetComponentRotation().Roll <= -45) {
+		if (LPaddlePivot->GetRelativeRotation().Roll <= -45) {
 			LeftPaddleSpeed = 600;
 		}
 
-		if (LPaddlePivot->GetComponentRotation().Roll >= 20) {
+		if (LPaddlePivot->GetRelativeRotation().Roll >= 20) {
 			LeftPaddleSpeed = 0;
-			LPaddlePivot->SetWorldRotation(FRotator(0, 0, 20));
+			LPaddlePivot->SetRelativeRotation(FRotator(0, 0, 20));
 		}
 	}
 
@@ -70,15 +70,15 @@ void APaddleManager::Tick(float DeltaTime)
 
 		FQuat QuatRotation = FQuat(NewRotation);
 
-		RPaddlePivot->AddWorldRotation(QuatRotation, false, 0, ETeleportType::None);
+		RPaddlePivot->AddLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 
-		if (RPaddlePivot->GetComponentRotation().Roll >= 45) {
+		if (RPaddlePivot->GetRelativeRotation().Roll >= 45) {
 			RightPaddleSpeed = -600;
 		}
 
-		if (RPaddlePivot->GetComponentRotation().Roll <= -20) {
+		if (RPaddlePivot->GetRelativeRotation().Roll <= -20) {
 			RightPaddleSpeed = 0;
-			RPaddlePivot->SetWorldRotation(FRotator(0, 0, -20));
+			RPaddlePivot->SetRelativeRotation(FRotator(0, 0, -20));
 		}
 	}
 }
