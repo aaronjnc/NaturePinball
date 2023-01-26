@@ -74,8 +74,8 @@ void ABirdNest::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		APinball* Pinball = Bird->TakeBall();
 		if (LockedBalls == 0)
 		{
+			Pinball->SetActorLocation(Nest->GetComponentLocation());
 			Pinball->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-			Pinball->SetActorLocation(GetActorLocation());
 		}
 		LockedBalls++;
 	}
