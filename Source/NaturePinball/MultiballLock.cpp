@@ -49,6 +49,10 @@ void AMultiballLock::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	}
 	else if (OtherActor->IsA<ABirdPickup>())
 	{
+		if (Bird->HasBall())
+		{
+			return;
+		}
 		Bird->GiveBall(Ball);
 	}
 }

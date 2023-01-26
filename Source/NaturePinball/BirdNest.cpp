@@ -67,6 +67,10 @@ void ABirdNest::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 {
 	if (OtherActor->IsA<ABirdPickup>())
 	{
+		if (!Bird->HasBall())
+		{
+			return;
+		}
 		APinball* Pinball = Bird->TakeBall();
 		if (LockedBalls == 0)
 		{

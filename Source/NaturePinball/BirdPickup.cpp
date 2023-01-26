@@ -46,10 +46,14 @@ void ABirdPickup::Tick(float DeltaTime)
 
 void ABirdPickup::SummonBird(FVector SummonPos)
 {
+	bIsFetchingBall = true;
 	MovementComponent->ConsumeInputVector();
 	MovementComponent->Velocity = FVector::Zero();
 	Dir = SummonPos - GetActorLocation();
 	Dir.Normalize();
+	FRotator LookDir = Dir.Rotation();
+	LookDir.Yaw -= 90;
+	SetActorRotation(LookDir);
 	MovementComponent->AddInputVector(Dir);
 	bIsMoving = true;
 }
@@ -65,6 +69,26 @@ void ABirdPickup::GiveBall(APinball* Pinball)
 APinball* ABirdPickup::TakeBall()
 {
 	SummonBird(StartLocation);
-	return Ball;
+	bIsFetchingBall = false;
+	APinball* OldBall = Ball;
+	Ball = nullptr;
+	return OldBall;
+}
+
+bool ABirdPickup::HasBall()
+{
+	return Ball != nullptr;
+}
+
+void ABirdPickup::StopBird(FVector Location, FRotator Rotation)
+{
+	bIsMoving = false;
+	SetActorLocation(Location);
+	SetActorRotation(Rotation);
+}
+
+bool ABirdPickup::IsFetchingBall()
+{
+	return bIsFetchingBall;
 }
 
