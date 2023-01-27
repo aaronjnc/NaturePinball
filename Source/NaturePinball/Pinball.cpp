@@ -32,3 +32,13 @@ void APinball::AddForce(FVector Force)
 {
 	Ball->AddForce(Force);
 }
+
+void APinball::LockBall()
+{
+	Ball->SetSimulatePhysics(false);
+}
+
+void APinball::UnlockBall()
+{
+	Ball->SetSimulatePhysics(true);
+}
