@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/BoxComponent.h"
+#include <NaturePinball/Launcher.h>
 #include "PaddleManager.generated.h"
 
 UCLASS()
@@ -27,9 +28,17 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void LeftMouseClicked();
+
+	void LeftMouseReleased();
+
 	void FlickLeft();
 
 	void FlickRight();
+
+	void SetLauncherActive();
+
+	void SetLauncherInactive();
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
@@ -59,4 +68,15 @@ private:
 	UPROPERTY()
 		float RightPaddleSpeed = 0;
 
+	UPROPERTY(EditAnywhere, Category = "Launcher")
+		ALauncher* Launcher;
+
+	UPROPERTY()
+		bool bLauncherActive = true;
+
+	UPROPERTY()
+		bool bMouseDown;
+
+	UPROPERTY()
+		float PreviousMouseY = 0;
 };

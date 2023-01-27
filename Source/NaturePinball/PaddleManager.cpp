@@ -2,6 +2,7 @@
 
 
 #include "PaddleManager.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 // Sets default values
 APaddleManager::APaddleManager()
@@ -46,6 +47,16 @@ void APaddleManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (bLauncherActive && bMouseDown) {
+		float mouseX;
+		float mouseY;
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetMousePosition(mouseX, mouseY);
+
+		Launcher->AddLauncherPosition(FVector(0, 0, PreviousMouseY - mouseY));
+
+		PreviousMouseY = mouseY;
+	}
+
 	if (LeftPaddleSpeed != 0)
 	{
 		FRotator NewRotation = FRotator(0, 0, LeftPaddleSpeed * DeltaTime);
@@ -88,8 +99,30 @@ void APaddleManager::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAction("LeftPaddle", IE_Pressed, this, &APaddleManager::FlickLeft);
+	InputComponent->BindAction("LeftPaddle", IE_Pressed, this, &APaddleManager::LeftMouseClicked);
+	InputComponent->BindAction("LeftPaddle", IE_Released, this, &APaddleManager::LeftMouseReleased);
 	InputComponent->BindAction("RightPaddle", IE_Pressed, this, &APaddleManager::FlickRight);
+}
+
+void APaddleManager::LeftMouseClicked()
+{
+	if (!bLauncherActive)
+		FlickLeft();
+	else {
+		bMouseDown = true;
+		float mouseX;
+		float mouseY;
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetMousePosition(mouseX, mouseY);
+		PreviousMouseY = mouseY;
+	}
+}
+
+void APaddleManager::LeftMouseReleased()
+{
+	if (bLauncherActive && bMouseDown) {
+		bMouseDown = false;
+		Launcher->ReleaseLauncher();
+	}
 }
 
 void APaddleManager::FlickLeft()
@@ -100,7 +133,17 @@ void APaddleManager::FlickLeft()
 
 void APaddleManager::FlickRight()
 {
-	if (RightPaddleSpeed == 0)
+	if (!bLauncherActive && RightPaddleSpeed == 0)
 		RightPaddleSpeed = 600;
+}
+
+void APaddleManager::SetLauncherActive()
+{
+	bLauncherActive = true;
+}
+
+void APaddleManager::SetLauncherInactive()
+{
+	bLauncherActive = false;
 }
 
