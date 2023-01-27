@@ -31,7 +31,10 @@ void ALauncher::Tick(float DeltaTime)
 	if (LauncherSpeed != 0) {
 		FVector newLocation = BallLauncher->GetRelativeLocation() + GetActorUpVector() * LauncherSpeed * DeltaTime;
 
-		if (FVector::Distance(OriginPos, newLocation) < 5) {
+		FVector dist = newLocation - OriginPos;
+		float dot = dist.Dot(GetActorUpVector());
+
+		if (dot >= 0) {
 			newLocation = OriginPos;
 			LauncherSpeed = 0;
 		}
