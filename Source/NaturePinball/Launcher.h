@@ -24,7 +24,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void AddLauncherPosition(FVector offset);
+	void AddLauncherPosition(float offset);
 
 	void ReleaseLauncher();
 
@@ -33,10 +33,13 @@ private:
 		UStaticMeshComponent* BallLauncher;
 
 	UPROPERTY()
-		float OriginZ = 0;
+		float MaxDistance = 300;
 
 	UPROPERTY()
-		float MinZ = -300;
+		FVector OriginPos;
+
+	UPROPERTY()
+		FVector MaxPos;
 
 	UPROPERTY()
 		float LauncherSpeed = 0;

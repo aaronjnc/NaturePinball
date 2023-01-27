@@ -39,7 +39,6 @@ APaddleManager::APaddleManager()
 void APaddleManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -52,7 +51,7 @@ void APaddleManager::Tick(float DeltaTime)
 		float mouseY;
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetMousePosition(mouseX, mouseY);
 
-		Launcher->AddLauncherPosition(FVector(0, 0, PreviousMouseY - mouseY));
+		Launcher->AddLauncherPosition(PreviousMouseY - mouseY);
 
 		PreviousMouseY = mouseY;
 	}
