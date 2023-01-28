@@ -39,6 +39,8 @@ APaddleManager::APaddleManager()
 void APaddleManager::BeginPlay()
 {
 	Super::BeginPlay();
+
+	SpawnBall();
 }
 
 // Called every frame
@@ -144,5 +146,10 @@ void APaddleManager::SetLauncherActive()
 void APaddleManager::SetLauncherInactive()
 {
 	bLauncherActive = false;
+}
+
+void APaddleManager::SpawnBall()
+{
+	Launcher->SpawnBall();
 }
 

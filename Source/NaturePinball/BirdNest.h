@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BirdPickup.h"
+#include "PaddleManager.h"
 #include "Pinball.h"
 #include "GameFramework/Actor.h"
 #include "BirdNest.generated.h"
@@ -41,6 +42,9 @@ public:
 					  bool bFromSweep, 
 					  const FHitResult &SweepResult);
 
+	UFUNCTION()
+	void RespawnBall();
+
 	FVector GetBirdPosition();
 
 private:
@@ -64,6 +68,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Pinball")
 	TSubclassOf<APinball> PinballSubclass;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	APaddleManager* Manager;
 
 	UPROPERTY()
 	ABirdPickup* Bird;

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Pinball.h"
 #include "GameFramework/Pawn.h"
 #include "Launcher.generated.h"
 
@@ -28,9 +29,14 @@ public:
 
 	void ReleaseLauncher();
 
+	void SpawnBall();
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UStaticMeshComponent* BallLauncher;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+		USceneComponent* BallSpawnPoint;
 
 	UPROPERTY()
 		float MaxDistance = 300;
@@ -43,4 +49,7 @@ private:
 
 	UPROPERTY()
 		float LauncherSpeed = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	TSubclassOf<APinball> PinballSubclass;
 };
