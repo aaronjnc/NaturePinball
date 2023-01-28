@@ -11,6 +11,9 @@ ALauncher::ALauncher()
 
 	BallLauncher = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Launcher Mesh"));
 	RootComponent = BallLauncher;
+
+	BallSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Ball Spawn Location"));
+	BallSpawnPoint->SetupAttachment(BallLauncher);
 }
 
 // Called when the game starts or when spawned
@@ -56,5 +59,12 @@ void ALauncher::AddLauncherPosition(float offset)
 void ALauncher::ReleaseLauncher()
 {
 	LauncherSpeed = FVector::Distance(OriginPos, BallLauncher->GetRelativeLocation()) * 10;
+}
+
+void ALauncher::SpawnBall()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Spawn Ball"));
+	APinball* Ball = GetWorld()->SpawnActor<APinball>(PinballSubclass,
+		BallSpawnPoint->GetComponentLocation(), BallSpawnPoint->GetComponentRotation());
 }
 
