@@ -103,6 +103,7 @@ void APaddleManager::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	InputComponent->BindAction("LeftPaddle", IE_Pressed, this, &APaddleManager::LeftMouseClicked);
 	InputComponent->BindAction("LeftPaddle", IE_Released, this, &APaddleManager::LeftMouseReleased);
 	InputComponent->BindAction("RightPaddle", IE_Pressed, this, &APaddleManager::FlickRight);
+	InputComponent->BindAction("ResetBall", IE_Pressed, this, &APaddleManager::SpawnBall);
 }
 
 void APaddleManager::LeftMouseClicked()
