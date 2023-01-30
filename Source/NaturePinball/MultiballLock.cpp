@@ -41,6 +41,10 @@ void AMultiballLock::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 {
 	if (OtherActor->IsA<APinball>())
 	{
+		if (Bird->HasBall())
+		{
+			return;
+		}
 		Ball = Cast<APinball>(OtherActor);
 		Ball->LockBall();
 		Ball->SetActorLocation(LockBox->GetComponentLocation());
@@ -49,6 +53,10 @@ void AMultiballLock::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	}
 	else if (OtherActor->IsA<ABirdPickup>())
 	{
+		if (Bird->HasBall())
+		{
+			return;
+		}
 		Bird->GiveBall(Ball);
 	}
 }

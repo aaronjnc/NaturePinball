@@ -33,10 +33,16 @@ public:
 
 	APinball* TakeBall();
 
-private:
-
-	UPROPERTY(EditAnywhere, Category = "Components")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	USkeletalMeshComponent* BirdMesh;
+
+	bool HasBall();
+
+	void StopBird(FVector Location, FRotator Rotation);
+
+	bool IsFetchingBall();
+	
+private:
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	USceneComponent* BallLocation;
@@ -64,5 +70,8 @@ private:
 
 	UPROPERTY()
 	APinball* Ball;
+
+	UPROPERTY()
+	bool bIsFetchingBall;
 
 };
