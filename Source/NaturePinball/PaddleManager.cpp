@@ -39,8 +39,6 @@ APaddleManager::APaddleManager()
 void APaddleManager::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SpawnBall();
 }
 
 // Called every frame
@@ -67,7 +65,7 @@ void APaddleManager::Tick(float DeltaTime)
 		LPaddlePivot->AddLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 
 		if (LPaddlePivot->GetRelativeRotation().Roll <= -45) {
-			LeftPaddleSpeed = 600;
+			LeftPaddleSpeed = PaddleSpeed;
 		}
 
 		if (LPaddlePivot->GetRelativeRotation().Roll >= 20) {
@@ -85,7 +83,7 @@ void APaddleManager::Tick(float DeltaTime)
 		RPaddlePivot->AddLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 
 		if (RPaddlePivot->GetRelativeRotation().Roll >= 45) {
-			RightPaddleSpeed = -600;
+			RightPaddleSpeed = -PaddleSpeed;
 		}
 
 		if (RPaddlePivot->GetRelativeRotation().Roll <= -20) {
