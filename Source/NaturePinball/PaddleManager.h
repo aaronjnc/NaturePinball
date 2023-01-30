@@ -40,6 +40,8 @@ public:
 
 	void SetLauncherInactive();
 
+	void SpawnBall();
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		USceneComponent* SceneRoot;

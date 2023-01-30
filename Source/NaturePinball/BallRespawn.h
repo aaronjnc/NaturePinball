@@ -5,17 +5,18 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PaddleManager.h"
+#include "LauncherCheck.h"
 #include <Runtime/Engine/Classes/Components/BoxComponent.h>
-#include "LauncherCheck.generated.h"
+#include "BallRespawn.generated.h"
 
 UCLASS()
-class NATUREPINBALL_API ALauncherCheck : public AActor
+class NATUREPINBALL_API ABallRespawn : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ALauncherCheck();
+	ABallRespawn();
 
 protected:
 	// Called when the game starts or when spawned
@@ -33,8 +34,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void DisableWall();
-
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UStaticMeshComponent* Mesh;
@@ -42,12 +41,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UBoxComponent* Box;
 
-	UPROPERTY(EditAnywhere, Category = "Components")
-		UStaticMeshComponent* Wall;
-
-	UPROPERTY(EditAnywhere, Category = "Components")
-		UBoxComponent* WallCol;
-
 	UPROPERTY(EditAnywhere, Category = "Manager")
 		APaddleManager* Manager;
+
+	UPROPERTY(EditAnywhere, Category = "Manager")
+		ALauncherCheck* LauncherCheck;
 };

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Pinball.h"
 #include "GameFramework/Pawn.h"
 #include "Launcher.generated.h"
 
@@ -24,20 +25,31 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void AddLauncherPosition(FVector offset);
+	void AddLauncherPosition(float offset);
 
 	void ReleaseLauncher();
+
+	void SpawnBall();
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UStaticMeshComponent* BallLauncher;
 
-	UPROPERTY()
-		float OriginZ = 0;
+	UPROPERTY(EditAnywhere, Category = "Components")
+		USceneComponent* BallSpawnPoint;
 
 	UPROPERTY()
-		float MinZ = -300;
+		float MaxDistance = 300;
+
+	UPROPERTY()
+		FVector OriginPos;
+
+	UPROPERTY()
+		FVector MaxPos;
 
 	UPROPERTY()
 		float LauncherSpeed = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	TSubclassOf<APinball> PinballSubclass;
 };

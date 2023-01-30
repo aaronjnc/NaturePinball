@@ -39,7 +39,8 @@ APaddleManager::APaddleManager()
 void APaddleManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	SpawnBall();
 }
 
 // Called every frame
@@ -52,7 +53,7 @@ void APaddleManager::Tick(float DeltaTime)
 		float mouseY;
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetMousePosition(mouseX, mouseY);
 
-		Launcher->AddLauncherPosition(FVector(0, 0, PreviousMouseY - mouseY));
+		Launcher->AddLauncherPosition(PreviousMouseY - mouseY);
 
 		PreviousMouseY = mouseY;
 	}
@@ -102,6 +103,7 @@ void APaddleManager::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	InputComponent->BindAction("LeftPaddle", IE_Pressed, this, &APaddleManager::LeftMouseClicked);
 	InputComponent->BindAction("LeftPaddle", IE_Released, this, &APaddleManager::LeftMouseReleased);
 	InputComponent->BindAction("RightPaddle", IE_Pressed, this, &APaddleManager::FlickRight);
+	InputComponent->BindAction("ResetBall", IE_Pressed, this, &APaddleManager::SpawnBall);
 }
 
 void APaddleManager::LeftMouseClicked()
@@ -145,5 +147,10 @@ void APaddleManager::SetLauncherActive()
 void APaddleManager::SetLauncherInactive()
 {
 	bLauncherActive = false;
+}
+
+void APaddleManager::SpawnBall()
+{
+	Launcher->SpawnBall();
 }
 
