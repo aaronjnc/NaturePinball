@@ -2,6 +2,7 @@
 
 
 #include "Launcher.h"
+#include "LauncherCheck.h"
 
 // Sets default values
 ALauncher::ALauncher()
@@ -58,13 +59,13 @@ void ALauncher::AddLauncherPosition(float offset)
 
 void ALauncher::ReleaseLauncher()
 {
-	LauncherSpeed = FVector::Distance(OriginPos, BallLauncher->GetRelativeLocation()) * 10;
+	LauncherSpeed = FVector::Distance(OriginPos, BallLauncher->GetRelativeLocation()) * LauncherMod;
 }
 
 void ALauncher::SpawnBall()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Spawn Ball"));
 	APinball* Ball = GetWorld()->SpawnActor<APinball>(PinballSubclass,
 		BallSpawnPoint->GetComponentLocation(), BallSpawnPoint->GetComponentRotation());
+	LauncherCheck->DisableWall();
 }
 

@@ -45,9 +45,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UStaticMeshComponent* Wall;
 
-	UPROPERTY(EditAnywhere, Category = "Components")
-		UBoxComponent* WallCol;
-
 	UPROPERTY(EditAnywhere, Category = "Manager")
 		APaddleManager* Manager;
 };
