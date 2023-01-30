@@ -25,6 +25,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void AddForce(FVector Force);
+
+	UFUNCTION()
+	void LockBall();
+
+	UFUNCTION()
+	void UnlockBall();
 	
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
