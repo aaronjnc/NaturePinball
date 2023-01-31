@@ -40,6 +40,9 @@ public:
 
 	void SetLauncherInactive();
 
+	UFUNCTION(BlueprintCallable)
+	void SpawnBall();
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		USceneComponent* SceneRoot;
@@ -61,6 +64,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UBoxComponent* RPaddleBox;
+
+	UPROPERTY(EditAnywhere, Category = "Paddles")
+	float PaddleSpeed;
 
 	UPROPERTY()
 		float LeftPaddleSpeed = 0;

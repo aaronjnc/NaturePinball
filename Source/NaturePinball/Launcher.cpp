@@ -2,6 +2,7 @@
 
 
 #include "Launcher.h"
+#include "LauncherCheck.h"
 
 // Sets default values
 ALauncher::ALauncher()
@@ -11,6 +12,9 @@ ALauncher::ALauncher()
 
 	BallLauncher = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Launcher Mesh"));
 	RootComponent = BallLauncher;
+
+	BallSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Ball Spawn Location"));
+	BallSpawnPoint->SetupAttachment(BallLauncher);
 }
 
 // Called when the game starts or when spawned
@@ -19,8 +23,8 @@ void ALauncher::BeginPlay()
 	Super::BeginPlay();
 	
 	// origin is based off initial position
-	OriginZ = BallLauncher->GetRelativeLocation().Z;
-	MinZ += OriginZ;
+	OriginPos = BallLauncher->GetRelativeLocation();
+	MaxPos = OriginPos + MaxDistance * -GetActorUpVector();
 }
 
 // Called every frame
@@ -29,9 +33,13 @@ void ALauncher::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (LauncherSpeed != 0) {
-		FVector newLocation = BallLauncher->GetRelativeLocation() + FVector(0, 0, LauncherSpeed * DeltaTime);
-		if (newLocation.Z >= OriginZ) {
-			newLocation.Z = OriginZ;
+		FVector newLocation = BallLauncher->GetRelativeLocation() + GetActorUpVector() * LauncherSpeed * DeltaTime;
+
+		FVector dist = newLocation - OriginPos;
+		float dot = dist.Dot(GetActorUpVector());
+
+		if (dot >= 0) {
+			newLocation = OriginPos;
 			LauncherSpeed = 0;
 		}
 
@@ -39,17 +47,25 @@ void ALauncher::Tick(float DeltaTime)
 	}
 }
 
-void ALauncher::AddLauncherPosition(FVector offset)
+void ALauncher::AddLauncherPosition(float offset)
 {
-	FVector newLocation = BallLauncher->GetRelativeLocation() + offset;
+	FVector newLocation = BallLauncher->GetRelativeLocation() + GetActorUpVector() * offset;
 
-	if (newLocation.Z <= OriginZ && newLocation.Z >= MinZ) {
+	if (MaxPos.Z > OriginPos.Z && newLocation.Z <= MaxPos.Z && newLocation.Z >= OriginPos.Z
+		|| MaxPos.Z < OriginPos.Z && newLocation.Z >= MaxPos.Z && newLocation.Z <= OriginPos.Z) {
 		BallLauncher->SetRelativeLocation(newLocation);
 	}
 }
 
 void ALauncher::ReleaseLauncher()
 {
-	LauncherSpeed = (OriginZ - BallLauncher->GetRelativeLocation().Z) * 10;
+	LauncherSpeed = FVector::Distance(OriginPos, BallLauncher->GetRelativeLocation()) * LauncherMod;
+}
+
+void ALauncher::SpawnBall()
+{
+	APinball* Ball = GetWorld()->SpawnActor<APinball>(PinballSubclass,
+		BallSpawnPoint->GetComponentLocation(), BallSpawnPoint->GetComponentRotation());
+	LauncherCheck->DisableWall();
 }
 

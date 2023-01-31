@@ -3,8 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Pinball.h"
 #include "GameFramework/Pawn.h"
 #include "Launcher.generated.h"
+
+class ALauncherCheck;
 
 //class UFloatingPawnMovement;
 UCLASS()
@@ -24,20 +27,37 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void AddLauncherPosition(FVector offset);
+	void AddLauncherPosition(float offset);
 
 	void ReleaseLauncher();
+
+	void SpawnBall();
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UStaticMeshComponent* BallLauncher;
 
-	UPROPERTY()
-		float OriginZ = 0;
+	UPROPERTY(EditAnywhere, Category = "Components")
+		USceneComponent* BallSpawnPoint;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	ALauncherCheck* LauncherCheck;
 
 	UPROPERTY()
-		float MinZ = -300;
+		float MaxDistance = 300;
+
+	UPROPERTY()
+		FVector OriginPos;
+
+	UPROPERTY()
+		FVector MaxPos;
 
 	UPROPERTY()
 		float LauncherSpeed = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	float LauncherMod;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	TSubclassOf<APinball> PinballSubclass;
 };

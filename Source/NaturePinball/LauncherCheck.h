@@ -33,12 +33,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void DisableWall();
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UBoxComponent* Box;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+		UStaticMeshComponent* Wall;
 
 	UPROPERTY(EditAnywhere, Category = "Manager")
 		APaddleManager* Manager;
