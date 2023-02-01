@@ -63,6 +63,7 @@ void ABirdNest::EmptyNest(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 void ABirdNest::SpawnBall()
 {
 	APinball* SpawnedBall = GetWorld()->SpawnActor<APinball>(PinballSubclass, BallSpawnPoint, FRotator::ZeroRotator);
+	IncreaseMultiball();
 	LockedBalls--;
 	if (LockedBalls == 0)
 	{
@@ -96,10 +97,12 @@ void ABirdNest::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	}
 }
 
-void ABirdNest::RespawnBall()
+void ABirdNest::RespawnBall_Implementation()
 {
-	Manager->SetLauncherActive();
-	Manager->SpawnBall();
+}
+
+void ABirdNest::IncreaseMultiball_Implementation()
+{
 }
 
 FVector ABirdNest::GetBirdPosition()

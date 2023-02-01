@@ -47,8 +47,11 @@ public:
 					  bool bFromSweep, 
 					  const FHitResult &SweepResult);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintNativeEvent)
 	void RespawnBall();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void IncreaseMultiball();
 	
 	FVector GetBirdPosition();
 
