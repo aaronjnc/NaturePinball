@@ -36,7 +36,13 @@ public:
 	
 	void SetBird(ABirdPickup* BirdPickup);
 
+	UFUNCTION(BlueprintNativeEvent)
+	void AddScore();
+
 	FVector GetBirdPosition();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Score")
+	int Score;
 
 private:
 
@@ -54,4 +60,5 @@ private:
 
 	UPROPERTY()
 	APinball* Ball;
+	
 };
