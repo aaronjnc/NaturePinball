@@ -149,6 +149,7 @@ void APaddleManager::SetLauncherInactive()
 
 void APaddleManager::SpawnBall()
 {
+	SetLauncherActive();
 	Launcher->SpawnBall();
 }
 
