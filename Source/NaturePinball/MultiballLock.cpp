@@ -50,6 +50,7 @@ void AMultiballLock::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		Ball->SetActorLocation(LockBox->GetComponentLocation());
 		Ball->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 		Bird->SummonBird(GetActorLocation());
+		AddScore();
 	}
 	else if (OtherActor->IsA<ABirdPickup>())
 	{
@@ -64,6 +65,10 @@ void AMultiballLock::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 void AMultiballLock::SetBird(ABirdPickup* BirdPickup)
 {
 	Bird = BirdPickup;
+}
+
+void AMultiballLock::AddScore_Implementation()
+{
 }
 
 FVector AMultiballLock::GetBirdPosition()
