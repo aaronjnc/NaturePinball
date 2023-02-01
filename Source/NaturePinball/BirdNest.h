@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BirdPickup.h"
+#include "PaddleManager.h"
 #include "Pinball.h"
 #include "GameFramework/Actor.h"
 #include "BirdNest.generated.h"
@@ -29,7 +30,9 @@ public:
 
 	void AddBall();
 
-	void EmptyNest(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Result);
+	UFUNCTION()
+	void EmptyNest(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	void SetBird(ABirdPickup* BirdPickup);
 
@@ -40,6 +43,9 @@ public:
 					  int32 OtherBodyIndex, 
 					  bool bFromSweep, 
 					  const FHitResult &SweepResult);
+
+	UFUNCTION()
+	void RespawnBall();
 
 	FVector GetBirdPosition();
 
@@ -64,6 +70,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Pinball")
 	TSubclassOf<APinball> PinballSubclass;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	APaddleManager* Manager;
 
 	UPROPERTY()
 	ABirdPickup* Bird;
