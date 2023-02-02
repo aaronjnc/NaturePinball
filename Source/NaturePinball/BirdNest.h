@@ -91,4 +91,10 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Pinball")
 	float SpawnPauseTime;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* BallDropSound;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* BallReleaseSound;
 };

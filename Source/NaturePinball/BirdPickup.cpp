@@ -6,6 +6,7 @@
 #include "MultiballLock.h"
 #include "BirdNest.h"
 #include "Pinball.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 // Sets default values
 ABirdPickup::ABirdPickup()
@@ -60,6 +61,8 @@ void ABirdPickup::SummonBird(FVector SummonPos)
 
 void ABirdPickup::GiveBall(APinball* Pinball)
 {
+	UGameplayStatics::PlaySound2D(GetWorld(), WingFlapSound, 5);
+	UGameplayStatics::PlaySound2D(GetWorld(), CooSound, 1);
 	Ball = Pinball;
 	Ball->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 	Ball->SetActorLocation(BallLocation->GetComponentLocation());
@@ -69,6 +72,7 @@ void ABirdPickup::GiveBall(APinball* Pinball)
 APinball* ABirdPickup::TakeBall()
 {
 	SummonBird(StartLocation);
+	UGameplayStatics::PlaySound2D(GetWorld(), WingFlapSound, 20);
 	bIsFetchingBall = false;
 	APinball* OldBall = Ball;
 	Ball = nullptr;

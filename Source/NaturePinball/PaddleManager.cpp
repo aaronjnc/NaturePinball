@@ -4,6 +4,7 @@
 #include "PaddleManager.h"
 #include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
+
 // Sets default values
 APaddleManager::APaddleManager()
 {
@@ -127,14 +128,18 @@ void APaddleManager::LeftMouseReleased()
 
 void APaddleManager::FlickLeft()
 {
-	if (LeftPaddleSpeed == 0)
+	if (LeftPaddleSpeed == 0) {
 		LeftPaddleSpeed = -600;
+		UGameplayStatics::PlaySound2D(GetWorld(), PaddleSound, 1);
+	}
 }
 
 void APaddleManager::FlickRight()
 {
-	if (!bLauncherActive && RightPaddleSpeed == 0)
+	if (!bLauncherActive && RightPaddleSpeed == 0) {
 		RightPaddleSpeed = 600;
+		UGameplayStatics::PlaySound2D(GetWorld(), PaddleSound, 1);
+	}
 }
 
 void APaddleManager::SetLauncherActive()
