@@ -66,6 +66,7 @@ void ABirdPickup::GiveBall(APinball* Pinball)
 	Ball = Pinball;
 	Ball->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 	Ball->SetActorLocation(BallLocation->GetComponentLocation());
+	Ball->SetActorEnableCollision(false);
 	SummonBird(Nest->GetActorLocation());
 }
 
