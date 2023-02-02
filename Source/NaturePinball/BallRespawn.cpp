@@ -29,15 +29,13 @@ void ABallRespawn::BeginPlay()
 void ABallRespawn::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor->IsA<APinball>()) {
-		if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Paddles active"));
-
 		OtherActor->Destroy();
-		Manager->SetLauncherActive();
-		Manager->SpawnBall();
-		LauncherCheck->DisableWall();
-		UGameplayStatics::PlaySound2D(GetWorld(), BallRespawnSound, 1);
+		SpawnBall();
 	}
+}
+
+void ABallRespawn::SpawnBall_Implementation()
+{
 }
 
 // Called every frame
