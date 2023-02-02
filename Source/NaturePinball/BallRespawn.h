@@ -30,6 +30,9 @@ protected:
 			bool bFromSweep,
 			const FHitResult& SweepResult);
 
+	UFUNCTION(BlueprintNativeEvent)
+	void SpawnBall();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
