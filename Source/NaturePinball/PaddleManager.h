@@ -43,6 +43,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SpawnBall();
 
+	UFUNCTION(BlueprintNativeEvent)
+	void ResetBall();
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		USceneComponent* SceneRoot;

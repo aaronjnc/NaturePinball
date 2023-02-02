@@ -102,7 +102,7 @@ void APaddleManager::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	InputComponent->BindAction("LeftPaddle", IE_Pressed, this, &APaddleManager::LeftMouseClicked);
 	InputComponent->BindAction("LeftPaddle", IE_Released, this, &APaddleManager::LeftMouseReleased);
 	InputComponent->BindAction("RightPaddle", IE_Pressed, this, &APaddleManager::FlickRight);
-	InputComponent->BindAction("ResetBall", IE_Pressed, this, &APaddleManager::SpawnBall);
+	InputComponent->BindAction("ResetBall", IE_Pressed, this, &APaddleManager::ResetBall);
 }
 
 void APaddleManager::LeftMouseClicked()
@@ -156,5 +156,9 @@ void APaddleManager::SpawnBall()
 {
 	SetLauncherActive();
 	Launcher->SpawnBall();
+}
+
+void APaddleManager::ResetBall_Implementation()
+{
 }
 
