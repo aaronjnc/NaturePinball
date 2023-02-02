@@ -3,6 +3,7 @@
 
 #include "Launcher.h"
 #include "LauncherCheck.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 // Sets default values
 ALauncher::ALauncher()
@@ -41,6 +42,7 @@ void ALauncher::Tick(float DeltaTime)
 		if (dot >= 0) {
 			newLocation = OriginPos;
 			LauncherSpeed = 0;
+			UGameplayStatics::PlaySound2D(GetWorld(), LauncherSound, 20);
 		}
 
 		BallLauncher->SetRelativeLocation(newLocation);

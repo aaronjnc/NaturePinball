@@ -3,6 +3,7 @@
 
 #include "BirdNest.h"
 #include "Components/BoxComponent.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 // Sets default values
 ABirdNest::ABirdNest()
@@ -58,6 +59,7 @@ void ABirdNest::EmptyNest(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 	//BallSpawnPoint = OtherActor->GetActorLocation();
 	BallSpawnPoint = FVector(-310.0, -1454.20459, 265);
 	GetWorld()->GetTimerManager().SetTimer(SpawnBallTimerHandle, this, &ABirdNest::SpawnBall, SpawnPauseTime, false);
+	UGameplayStatics::PlaySound2D(GetWorld(), BallReleaseSound, 5);
 }
 
 void ABirdNest::SpawnBall()
@@ -94,6 +96,7 @@ void ABirdNest::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		Ball->K2_DestroyActor();
 		LockedBalls++;
 		RespawnBall();
+		UGameplayStatics::PlaySound2D(GetWorld(), BallDropSound, 5);
 	}
 }
 

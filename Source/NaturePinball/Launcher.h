@@ -60,4 +60,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Pinball")
 	TSubclassOf<APinball> PinballSubclass;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* LauncherSound;
 };
