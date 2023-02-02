@@ -32,8 +32,6 @@ void ALauncherCheck::BeginPlay()
 void ALauncherCheck::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor->IsA<APinball>()) {
-		if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Paddles active"));
 
 		Manager->SetLauncherInactive();
 		Wall->SetHiddenInGame(false);

@@ -52,24 +52,27 @@ void ABirdNest::AddBall()
 void ABirdNest::EmptyNest(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (!OtherActor->IsA<APinball>() || LockedBalls == 0)
+	if (!OtherActor->IsA<APinball>() || LockedBalls == 0 || bSpawningBalls)
 	{
 		return;
 	}
 	//BallSpawnPoint = OtherActor->GetActorLocation();
+	bSpawningBalls = true;
 	BallSpawnPoint = FVector(-310.0, -1454.20459, 265);
 	GetWorld()->GetTimerManager().SetTimer(SpawnBallTimerHandle, this, &ABirdNest::SpawnBall, SpawnPauseTime, false);
-	UGameplayStatics::PlaySound2D(GetWorld(), BallReleaseSound, 5);
+
 }
 
 void ABirdNest::SpawnBall()
 {
 	APinball* SpawnedBall = GetWorld()->SpawnActor<APinball>(PinballSubclass, BallSpawnPoint, FRotator::ZeroRotator);
+	UGameplayStatics::PlaySound2D(GetWorld(), BallReleaseSound, 5);
 	IncreaseMultiball();
 	LockedBalls--;
 	if (LockedBalls == 0)
 	{
 		Pinball->SetVisibility(false);
+		bSpawningBalls = false;
 	}
 	else
 	{
