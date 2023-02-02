@@ -97,4 +97,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Sounds")
 		USoundBase* BallReleaseSound;
+		
+	UPROPERTY()
+		bool bSpawningBalls;
 };
