@@ -3,6 +3,7 @@
 
 #include "BallRespawn.h"
 #include "Pinball.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 // Sets default values
 ABallRespawn::ABallRespawn()
@@ -35,6 +36,7 @@ void ABallRespawn::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		Manager->SetLauncherActive();
 		Manager->SpawnBall();
 		LauncherCheck->DisableWall();
+		UGameplayStatics::PlaySound2D(GetWorld(), BallRespawnSound, 1);
 	}
 }
 

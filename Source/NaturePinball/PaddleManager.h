@@ -85,4 +85,8 @@ private:
 
 	UPROPERTY()
 		float PreviousMouseY = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* PaddleSound;
+
 };

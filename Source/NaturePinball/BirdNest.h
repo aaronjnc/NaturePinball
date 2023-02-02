@@ -34,6 +34,9 @@ public:
 	void EmptyNest(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION()
+	void SpawnBall();
+	
 	void SetBird(ABirdPickup* BirdPickup);
 
 	UFUNCTION()
@@ -44,9 +47,12 @@ public:
 					  bool bFromSweep, 
 					  const FHitResult &SweepResult);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintNativeEvent)
 	void RespawnBall();
 
+	UFUNCTION(BlueprintNativeEvent)
+	void IncreaseMultiball();
+	
 	FVector GetBirdPosition();
 
 private:
@@ -59,11 +65,14 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 	UBoxComponent* BirdCollider;
 
-	UPROPERTY(EditAnywhere, Category = "Components")
-	USceneComponent* BallSpawnPoint;
+	UPROPERTY()
+	FVector BallSpawnPoint;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	USceneComponent* BirdPosition;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+	UStaticMeshComponent* Pinball;
 
 	UPROPERTY()
 	int LockedBalls = 0;
@@ -78,5 +87,14 @@ private:
 	ABirdPickup* Bird;
 
 	UPROPERTY()
-	APinball* Ball;
+	FTimerHandle SpawnBallTimerHandle;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	float SpawnPauseTime;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* BallDropSound;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* BallReleaseSound;
 };
