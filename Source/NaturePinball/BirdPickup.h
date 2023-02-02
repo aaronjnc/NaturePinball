@@ -74,4 +74,10 @@ private:
 	UPROPERTY()
 	bool bIsFetchingBall;
 
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* CooSound;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* WingFlapSound;
+
 };

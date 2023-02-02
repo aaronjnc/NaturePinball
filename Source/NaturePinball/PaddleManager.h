@@ -40,6 +40,7 @@ public:
 
 	void SetLauncherInactive();
 
+	UFUNCTION(BlueprintCallable)
 	void SpawnBall();
 
 private:
@@ -64,6 +65,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		UBoxComponent* RPaddleBox;
 
+	UPROPERTY(EditAnywhere, Category = "Paddles")
+	float PaddleSpeed;
+
 	UPROPERTY()
 		float LeftPaddleSpeed = 0;
 
@@ -81,4 +85,8 @@ private:
 
 	UPROPERTY()
 		float PreviousMouseY = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* PaddleSound;
+
 };

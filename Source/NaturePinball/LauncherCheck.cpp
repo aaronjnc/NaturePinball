@@ -18,9 +18,6 @@ ALauncherCheck::ALauncherCheck()
 
 	Wall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Wall"));
 	Wall->SetupAttachment(RootComponent);
-
-	WallCol = CreateDefaultSubobject<UBoxComponent>(TEXT("Wall Overlap"));
-	WallCol->SetupAttachment(Wall);
 }
 
 // Called when the game starts or when spawned

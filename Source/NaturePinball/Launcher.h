@@ -7,6 +7,8 @@
 #include "GameFramework/Pawn.h"
 #include "Launcher.generated.h"
 
+class ALauncherCheck;
+
 //class UFloatingPawnMovement;
 UCLASS()
 class NATUREPINBALL_API ALauncher : public APawn
@@ -38,6 +40,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 		USceneComponent* BallSpawnPoint;
 
+	UPROPERTY(EditAnywhere, Category = "Pinball")
+	ALauncherCheck* LauncherCheck;
+
 	UPROPERTY()
 		float MaxDistance = 300;
 
@@ -51,5 +56,11 @@ private:
 		float LauncherSpeed = 0;
 
 	UPROPERTY(EditAnywhere, Category = "Pinball")
+	float LauncherMod;
+
+	UPROPERTY(EditAnywhere, Category = "Pinball")
 	TSubclassOf<APinball> PinballSubclass;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* LauncherSound;
 };

@@ -46,4 +46,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Manager")
 		ALauncherCheck* LauncherCheck;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+		USoundBase* BallRespawnSound;
 };

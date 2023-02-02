@@ -4,6 +4,7 @@
 #include "PaddleManager.h"
 #include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
+
 // Sets default values
 APaddleManager::APaddleManager()
 {
@@ -39,8 +40,6 @@ APaddleManager::APaddleManager()
 void APaddleManager::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SpawnBall();
 }
 
 // Called every frame
@@ -67,7 +66,7 @@ void APaddleManager::Tick(float DeltaTime)
 		LPaddlePivot->AddLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 
 		if (LPaddlePivot->GetRelativeRotation().Roll <= -45) {
-			LeftPaddleSpeed = 600;
+			LeftPaddleSpeed = PaddleSpeed;
 		}
 
 		if (LPaddlePivot->GetRelativeRotation().Roll >= 20) {
@@ -85,7 +84,7 @@ void APaddleManager::Tick(float DeltaTime)
 		RPaddlePivot->AddLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 
 		if (RPaddlePivot->GetRelativeRotation().Roll >= 45) {
-			RightPaddleSpeed = -600;
+			RightPaddleSpeed = -PaddleSpeed;
 		}
 
 		if (RPaddlePivot->GetRelativeRotation().Roll <= -20) {
@@ -129,14 +128,18 @@ void APaddleManager::LeftMouseReleased()
 
 void APaddleManager::FlickLeft()
 {
-	if (LeftPaddleSpeed == 0)
+	if (LeftPaddleSpeed == 0) {
 		LeftPaddleSpeed = -600;
+		UGameplayStatics::PlaySound2D(GetWorld(), PaddleSound, 1);
+	}
 }
 
 void APaddleManager::FlickRight()
 {
-	if (!bLauncherActive && RightPaddleSpeed == 0)
+	if (!bLauncherActive && RightPaddleSpeed == 0) {
 		RightPaddleSpeed = 600;
+		UGameplayStatics::PlaySound2D(GetWorld(), PaddleSound, 1);
+	}
 }
 
 void APaddleManager::SetLauncherActive()
@@ -151,6 +154,7 @@ void APaddleManager::SetLauncherInactive()
 
 void APaddleManager::SpawnBall()
 {
+	SetLauncherActive();
 	Launcher->SpawnBall();
 }
 

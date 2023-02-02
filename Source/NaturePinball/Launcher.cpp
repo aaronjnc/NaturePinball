@@ -2,6 +2,8 @@
 
 
 #include "Launcher.h"
+#include "LauncherCheck.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 // Sets default values
 ALauncher::ALauncher()
@@ -40,6 +42,7 @@ void ALauncher::Tick(float DeltaTime)
 		if (dot >= 0) {
 			newLocation = OriginPos;
 			LauncherSpeed = 0;
+			UGameplayStatics::PlaySound2D(GetWorld(), LauncherSound, 20);
 		}
 
 		BallLauncher->SetRelativeLocation(newLocation);
@@ -58,13 +61,13 @@ void ALauncher::AddLauncherPosition(float offset)
 
 void ALauncher::ReleaseLauncher()
 {
-	LauncherSpeed = FVector::Distance(OriginPos, BallLauncher->GetRelativeLocation()) * 10;
+	LauncherSpeed = FVector::Distance(OriginPos, BallLauncher->GetRelativeLocation()) * LauncherMod;
 }
 
 void ALauncher::SpawnBall()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Spawn Ball"));
 	APinball* Ball = GetWorld()->SpawnActor<APinball>(PinballSubclass,
 		BallSpawnPoint->GetComponentLocation(), BallSpawnPoint->GetComponentRotation());
+	LauncherCheck->DisableWall();
 }
 
