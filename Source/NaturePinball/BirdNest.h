@@ -65,7 +65,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 	UBoxComponent* BirdCollider;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "Pinball")
 	FVector BallSpawnPoint;
 
 	UPROPERTY(EditAnywhere, Category = "Components")

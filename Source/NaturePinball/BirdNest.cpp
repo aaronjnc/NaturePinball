@@ -58,7 +58,7 @@ void ABirdNest::EmptyNest(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 	}
 	//BallSpawnPoint = OtherActor->GetActorLocation();
 	bSpawningBalls = true;
-	BallSpawnPoint = FVector(-310.0, -1454.20459, 265);
+	//BallSpawnPoint = FVector(-310.0, -1454.20459, 265);
 	GetWorld()->GetTimerManager().SetTimer(SpawnBallTimerHandle, this, &ABirdNest::SpawnBall, SpawnPauseTime, false);
 
 }
