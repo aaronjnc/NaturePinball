@@ -25,7 +25,9 @@ void APinball::BeginPlay()
 void APinball::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	FVector currentVelocity = Ball->GetPhysicsLinearVelocity();
+	FVector clampedVelocity = currentVelocity.GetClampedToMaxSize(MaxSpeed);
+	Ball->SetPhysicsLinearVelocity(clampedVelocity);
 }
 
 void APinball::AddForce(FVector Force)

@@ -35,5 +35,8 @@ public:
 private:
 	UPROPERTY(EditAnywhere, Category = "Components")
 	UStaticMeshComponent* Ball;	
+	
+	UPROPERTY(EditAnywhere, Category = "Ball")
+	float MaxSpeed;
 
 };
