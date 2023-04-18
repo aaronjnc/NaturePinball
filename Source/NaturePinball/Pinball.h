@@ -23,4 +23,20 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+	void AddForce(FVector Force);
+
+	UFUNCTION()
+	void LockBall();
+
+	UFUNCTION()
+	void UnlockBall();
+	
+private:
+	UPROPERTY(EditAnywhere, Category = "Components")
+	UStaticMeshComponent* Ball;	
+	
+	UPROPERTY(EditAnywhere, Category = "Ball")
+	float MaxSpeed;
+
 };
